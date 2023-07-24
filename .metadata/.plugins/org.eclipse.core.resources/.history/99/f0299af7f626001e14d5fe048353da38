@@ -1,0 +1,48 @@
+class Anime{
+	private String animeName;
+	private float rating;
+	private String heroName;
+	private String villianName;
+	
+	public String getHeroName() {
+		return heroName;
+	}
+	public void setHeroName(String heroName) {
+		this.heroName = heroName;
+	}
+	public String getVillianName() {
+		return villianName;
+	}
+	public void setVillianName(String villianName) {
+		this.villianName = villianName;
+	}
+	public String getAnimeName() {
+		return animeName;
+	}
+	public void setAnimeName(String animeName) {
+		this.animeName = animeName;
+	}
+	public float getRating() {
+		return rating;
+	}
+	public void setRating(float rating) {
+		this.rating = rating;
+	}
+	
+	
+}
+public class Main {
+	public static void main(String[] args) {
+		Anime anime=new Anime();
+		anime.setAnimeName("Jujutsu Kaisen");
+		anime.setHeroName("Gojo Satoru");
+		anime.setRating(4.6f);
+		anime.setVillianName("Saime");
+		
+		System.out.println("Anime Name is "+anime.getAnimeName());
+		System.out.println("Hero Name is "+anime.getHeroName());
+		System.out.println("Rating Name is "+anime.getRating());
+		System.out.println("Villian Name is " +anime.getVillianName());
+		
+	}
+}

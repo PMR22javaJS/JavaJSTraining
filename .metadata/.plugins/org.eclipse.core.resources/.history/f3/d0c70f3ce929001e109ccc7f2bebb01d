@@ -1,0 +1,18 @@
+
+public class Validator {
+	static boolean checkName(String name) {
+		return (name.matches("^[a-zA-Z]*$"))?true:false;
+	}
+	
+	static boolean checkAge(int age, int minVal, int maxVal) {
+		return (age>=minVal && age<=maxVal)?true:false;
+	}
+	
+	static boolean checkCollegeName(String cllgName) {
+		return (cllgName.matches("^[a-zA-Z,' ']*$"))?true:false;
+	}
+	
+	static boolean checkGender(char gender) {
+		return (gender=='M' || gender=='F')?true:false;
+	}
+}

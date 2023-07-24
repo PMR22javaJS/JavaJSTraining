@@ -1,0 +1,43 @@
+class Anime2{
+	private String animeName;
+	private float rating;
+	private String heroName;
+	private String villianName;
+	
+	Anime2(String animeName, float rating, String heroName, String villianName){
+		this.animeName=animeName;
+		this.rating=rating;
+		this.heroName=heroName;
+		this.villianName=villianName;
+	}
+	
+	Anime2(String animeName, float rating, String villianName){
+		this.animeName=animeName;
+		this.rating=rating;
+		this.villianName=villianName;
+	}
+	
+	Anime2(String animeName, float rating){
+		this.animeName=animeName;
+		this.rating=rating;
+	}
+	
+	public void printField() {
+		System.out.println("Anime name is " + this.animeName);
+		System.out.println("Rating is "+ this.rating);
+		System.out.println("Hero Name is " + this.heroName);
+		System.out.println("Villian Name is "+this.villianName);
+	}
+}
+public class Main2 {
+	public static void main(String[] args) {
+		Anime2 anime2obj=new Anime2("Demon Slayer", 4.8f, "Nezuko", "Muzan");
+		anime2obj.printField();
+		Anime2 anime2Obj2=new Anime2("Jujutsu Kaisen",4.4f,"KK");
+		anime2Obj2.printField();
+		Anime2 anime2Obj3=new Anime2("Chainsaw Man", 5.0f);
+		anime2Obj3.printField();;
+		
+		
+	}
+}

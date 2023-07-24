@@ -1,0 +1,22 @@
+
+class Desktop{
+	
+}
+
+class Laptop{
+	
+}
+
+class IPad{
+	
+}
+class SmartPhone{
+	
+}
+
+
+public class InheritanceTest {
+	public static void main(String[] args) {
+	
+}
+}

@@ -1,0 +1,27 @@
+class Anime2{
+	private String animeName;
+	private float rating;
+	private String heroName;
+	private String villianName;
+	
+	public void setterMethod(String animeName, float rating, String heroName, String villianName) {
+		animeName=this.animeName;
+		rating=this.rating;
+		heroName=this.heroName;
+		villianName=this.villianName;
+	}
+	
+	public void printField() {
+		System.out.println("Anime name is " + this.animeName);
+		System.out.println("Rating is "+ this.rating);
+		System.out.println("Hero Name is " + this.heroName);
+		System.out.println("Villian Name is "+this.villianName);
+	}
+}
+public class Main2 {
+	public static void main(String[] args) {
+		Anime2 anime2obj=new Anime2();
+		anime2obj.setterMethod("Demon Slayer", 4.8f, "Nezuko", "Muzan");
+		anime2obj.printField();
+	}
+}
