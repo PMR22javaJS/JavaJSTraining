@@ -23,10 +23,10 @@ class Lung{
 }
 
 class Human{
-	private Heart heart=new Heart();						//hasA 
+	private Heart heart=new Heart();						//hasA relation
 	private Brain brain=new Brain();						//hasA relation
-	private Kidney kidney=new Kidney();
-	private Lung lung=new Lung();
+	private Kidney kidney=new Kidney();						//hasA relation
+	private Lung lung=new Lung();							//hasA relation
 	
 	void pumpBlood() {
 		heart.pumping();
