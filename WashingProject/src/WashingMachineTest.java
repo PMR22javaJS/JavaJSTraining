@@ -58,7 +58,7 @@ class WashingMachine extends Machine { //isA
 			laundryObj.setWaterUsed(water.getQuantity());
 			laundryObj.setElectricityUsed(elect.getUnitUsed());
 			laundryObj.setCostOfWashingPowder(washPowder.getPrice());
-			laundryObj.setTotalCost(washPowder.getPrice()*elect.getCostPerUnit()*elect.getUnitUsed()*cloth.length);
+			laundryObj.setTotalCost(washPowder.getPrice()+elect.getCostPerUnit()*elect.getUnitUsed()*cloth.length);
 			for(int i=0;i<cloth.length;i++) {
 				cloth[i].setClean(true);
 			}
