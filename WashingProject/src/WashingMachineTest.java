@@ -3,27 +3,29 @@ import java.util.Scanner;
 public class WashingMachineTest {
 	public static void main(String[] args) {
 //		System.out.println("wash powder : "+washPowder); //toString is invoked
-		Scanner scannerObj=new Scanner(System.in);
+		Scanner scannerObj1=new Scanner(System.in);
+		Scanner scannerObj2=new Scanner(System.in);
+		Scanner scannerObj3=new Scanner(System.in);
 		System.out.println("Enter the size of cloth you want to insert in washing machine");
-		int size=scannerObj.nextInt();
+		int size=scannerObj1.nextInt();
 		Cloth [] cloth=new Cloth[size];
 		System.out.println("The size of clothes in washing machine is : "+size);
 		for(int i=0;i<size;i++) {
 			System.out.println("Enter the details of "+(i+1)+" cloth");
 			System.out.println("Enter the material");
-			String material=scannerObj.next();
+			String material=scannerObj1.next();
 			System.out.println("Enter the color");
-			String color=scannerObj.next();
-			System.out.println("Enter the cost");
+			String color=scannerObj2.next();
+//			System.out.println("Enter the cost");
 //			String temp=scannerObj.nextLine();
 //			float cost=Float.parseFloat(scannerObj.nextLine());
 			float cost;
 			System.out.println("Enter the type");
-			String type=scannerObj.next();
-			if(type=="Inner") cost=10.0f;
-			else if(type=="Tshirt") cost=20.0f;
-			else if(type=="Shirt") cost=25.0f;
-			else if(type=="Pants" || type=="Trousers") cost=30.0f;
+			String type=scannerObj3.next();
+			if(type.equalsIgnoreCase("Inner")) cost=10.0f;
+			else if(type.equalsIgnoreCase("Tshirt")) cost=20.0f;
+			else if(type.equalsIgnoreCase("Shirt")) cost=25.0f;
+			else if(type.equalsIgnoreCase("Pants") || type.equalsIgnoreCase("Trousers")) cost=30.0f;
 			else cost=40.f;
 			boolean clean=false;
 			cloth[i]=new Cloth(material,color,cost,type,clean);
