@@ -30,6 +30,7 @@ public class DivisionTest {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println("The exception is "+e);
+			
 		}
 		finally {
 			System.out.println("The program is run regardless of the outcome and the inputs");
