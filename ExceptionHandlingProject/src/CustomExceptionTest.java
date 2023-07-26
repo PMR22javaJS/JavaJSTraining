@@ -65,7 +65,7 @@ class Car
 		double fuel=Math.random()%10;
 		double charge=Math.random()%10;
 		
-		if(value>=0.40) {
+		if(value>=0.20) {
 			keyFound=true;
 		}
 		
@@ -79,14 +79,14 @@ class Car
 			
 		}
 		
-		if(fuel>0.70) {
+		if(fuel>0.20) {
 			System.out.println("Car has enough fuel");
 		}
 		else {
 			throw new DieselOver("Diesel is not enough");
 		}
 		
-		if(charge>0.70) {
+		if(charge>0.20) {
 			System.out.println("Battery is enough charged");
 		}
 		else {
