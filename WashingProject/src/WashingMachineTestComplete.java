@@ -1,64 +1,158 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class WashingMachineTest {
-	public static void main(String[] args) {
+class OutOfTime extends Exception{
+	OutOfTime(String msg){
+		super(msg);
+	}
+}
+
+class OutOfElec extends Exception{
+	OutOfElec(String msg){
+		super(msg);
+	}
+}
+
+class OutOfWater extends Exception{
+	OutOfWater(String msg){
+		super(msg);
+	}
+}
+
+class OutOfCloths extends Exception{
+	OutOfCloths(String msg){
+		super(msg);
+	}
+}
+
+public class WashingMachineTestComplete {
+	public static void main(String[] args) throws OutOfWater, OutOfElec, OutOfTime, OutOfCloths {
 //		System.out.println("wash powder : "+washPowder); //toString is invoked
-		Scanner scannerObj1=new Scanner(System.in);
-		Scanner scannerObj2=new Scanner(System.in);
-		Scanner scannerObj3=new Scanner(System.in);
-		System.out.println("Enter the size of cloth you want to insert in washing machine");
-		int size=scannerObj1.nextInt();
-		Cloth [] cloth=new Cloth[size];
-		System.out.println("The size of clothes in washing machine is : "+size);
-		for(int i=0;i<size;i++) {
-			System.out.println("Enter the details of "+(i+1)+" cloth");
-			System.out.println("Enter the material");
-			String material=scannerObj1.next();
-			System.out.println("Enter the color");
-			String color=scannerObj2.next();
-//			System.out.println("Enter the cost");
-//			String temp=scannerObj.nextLine();
-//			float cost=Float.parseFloat(scannerObj.nextLine());
-			float cost;
-			System.out.println("Enter the type");
-			String type=scannerObj3.next();
-			if(type.equalsIgnoreCase("Inner")) cost=10.0f;
-			else if(type.equalsIgnoreCase("Tshirt")) cost=20.0f;
-			else if(type.equalsIgnoreCase("Shirt")) cost=25.0f;
-			else if(type.equalsIgnoreCase("Pants") || type.equalsIgnoreCase("Trousers")) cost=30.0f;
-			else cost=40.f;
-			boolean clean=false;
-			cloth[i]=new Cloth(material,color,cost,type,clean);
-			System.out.println("------------------------------");
-		}
-		WashingPowder washPowder = new WashingPowder(100,"Nirma", "Front Load", true, 10.0f);
-		Electricity elecObj=new Electricity("AC",8.2f,10,2,"Reliance");
-		Water water=new Water("Soft",2,"35");
+//		String material, String color, float cost, String type, boolean clean
 		
-		WashingMachine washMachine=new WashingMachine();
-		Laundry laundryObj1=washMachine.wash(washPowder,water,elecObj,cloth);
-		System.out.println(laundryObj1.toString());
-		for(int i=0;i<size;i++) {
-			System.out.println(cloth[i].toString());
+		Cloth cloth1= new Cloth("fabric","red",9.0f,"jeans",false);
+		Cloth clothObj1 []=new Cloth[1];
+		clothObj1[0]=cloth1;
+		WashingPowder washPowder1 = new WashingPowder(100,"Nirma", "Front Load", true, 10.0f);
+		Electricity elecObj1=new Electricity("AC",8.2f,10,2,"Reliance");
+		Water water1=new Water("Soft",2,"35");
+		
+		WashingMachine washMachine1=new WashingMachine("Samsung",washPowder1, water1, elecObj1, clothObj1);
+		Thread thread1=new Thread(washMachine1);
+		
+		
+		Cloth cloth2= new Cloth("silk","white",19.0f,"shirt",false);
+		Cloth clothObj2 []=new Cloth[1];
+		clothObj2[0]=cloth2;
+		WashingPowder washPowder2 = new WashingPowder(200,"Surf", "Back", true, 20.0f);
+		Electricity elecObj2=new Electricity("AC",18.2f,20,4,"JIO");
+		Water water2=new Water("Hard",4,"40");
+		
+		WashingMachine washMachine2=new WashingMachine("HP",washPowder2, water2, elecObj2, clothObj2);
+		Thread thread2=new Thread(washMachine2);
+		
+		thread1.start();
+		thread2.start();
+		
+		try {
+			thread1.join();
+			thread2.join();
 		}
+		catch(InterruptedException ex) {
+			System.out.println("The exception is : "+ex);
+		}
+		
+		Laundry laundry1=washMachine1.wash();
+		Laundry laundry2=washMachine2.wash();
+		System.out.println(laundry1.toString());
+		System.out.println(laundry2.toString());
+		
+	}
+
+	@Override
+	public String toString() {
+		return "WashingMachineTestSir [getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
+				+ super.toString() + "]";
 	}
 }
 
 class Machine {
 	
 }
-class WashingMachine extends Machine { //isA
+class WashingMachine extends Machine implements Runnable{ //isA
 	
-	WashingTub washTub = new WashingTub(); //hasA
-
-	
-		Laundry wash(WashingPowder washPowder, Water water, Electricity elect, Cloth cloth[]) {
+//	WashingTub washTub = new WashingTub(); //hasA
+		private String brand;
+		WashingPowder washPowder;
+		Water water;
+		Electricity elect;
+		Cloth [] cloth;
+		
+		WashingMachine(String brand,WashingPowder washPowder, Water water, Electricity elect, Cloth [] cloth1){
+			this.brand=brand;
+			this.washPowder=washPowder;
+			this.water=water;
+			this.elect=elect;
+			this.cloth=cloth1;
+		}
+		
+		public void run() {
+			for(int i=0;i<1000;i++) {
+				System.out.println(brand+" is running............");
+			}
+			try {
+				this.wash();
+			} catch (OutOfWater e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (OutOfElec e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (OutOfTime e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (OutOfCloths e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		Laundry wash() throws  OutOfWater, OutOfElec, OutOfTime, OutOfCloths {
 			Laundry laundryObj=new Laundry();
-			laundryObj.setNumberOfCloths(cloth.length);
-			laundryObj.setWaterUsed(water.getQuantity());
-			laundryObj.setElectricityUsed(elect.getUnitUsed());
+			if(cloth.length>0) {
+				laundryObj.setNumberOfCloths(cloth.length);
+			}
+			else {
+				throw new OutOfCloths("It is out of cloths ");
+			}
+			
+			float time=(float)(Math.random()*100);
+			if(time<101.0f) {
+				laundryObj.setTimeRequired(elect.getTime());
+			}
+			else {
+				throw new OutOfTime("It is out of time ");
+			}																																																																																																																												
+			
+			float waterUsed=(float)(Math.random()*100);
+			if(waterUsed>1.0f) {
+				laundryObj.setWaterUsed(water.getQuantity());
+			}
+			else {
+				throw new OutOfWater("It is out of Water ");
+			}
+			
+			float elecUsed=(float)(Math.random()*10);
+			if(elecUsed<10.0f) {
+				laundryObj.setElectricityUsed(elect.getUnitUsed());
+			}
+			else {
+				throw new OutOfElec("It is out of electricity ");
+			}
+			
 			laundryObj.setCostOfWashingPowder(washPowder.getPrice());
-			laundryObj.setTotalCost(washPowder.getPrice()+elect.getCostPerUnit()*elect.getUnitUsed()*cloth.length);
+			float temp=washPowder.getPrice()+elect.getCostPerUnit()*elect.getUnitUsed()*cloth.length;
+			laundryObj.setTotalCost(temp);
 			for(int i=0;i<cloth.length;i++) {
 				cloth[i].setClean(true);
 			}
@@ -299,6 +393,10 @@ class Electricity {
 		this.costPerUnit = costPerUnit;
 		this.unitUsed = unitUsed;
 		this.supplier = supplier;
+	}
+	public float getTime() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	@Override
 	public String toString() {
