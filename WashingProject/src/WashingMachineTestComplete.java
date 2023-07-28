@@ -62,8 +62,8 @@ public class WashingMachineTestComplete {
 			System.out.println("The exception is : "+ex);
 		}
 		
-		Laundry laundry1=washMachine1.wash();
-		Laundry laundry2=washMachine2.wash();
+		Laundry laundry1=washMachine1.getLaundryObj();
+		Laundry laundry2=washMachine2.getLaundryObj();
 		System.out.println(laundry1.toString());
 		System.out.println(laundry2.toString());
 		
@@ -87,7 +87,7 @@ class WashingMachine extends Machine implements Runnable{ //isA
 		Water water;
 		Electricity elect;
 		Cloth [] cloth;
-		
+		Laundry laundryObj;
 		WashingMachine(String brand,WashingPowder washPowder, Water water, Electricity elect, Cloth [] cloth1){
 			this.brand=brand;
 			this.washPowder=washPowder;
@@ -117,8 +117,16 @@ class WashingMachine extends Machine implements Runnable{ //isA
 			}
 		}
 		
-		Laundry wash() throws  OutOfWater, OutOfElec, OutOfTime, OutOfCloths {
-			Laundry laundryObj=new Laundry();
+		public Laundry getLaundryObj() {
+			return laundryObj;
+		}
+
+		public void setLaundryObj(Laundry laundryObj) {
+			this.laundryObj = laundryObj;
+		}
+
+		void wash() throws  OutOfWater, OutOfElec, OutOfTime, OutOfCloths {
+			laundryObj=new Laundry();
 			if(cloth.length>0) {
 				laundryObj.setNumberOfCloths(cloth.length);
 			}
@@ -156,8 +164,6 @@ class WashingMachine extends Machine implements Runnable{ //isA
 			for(int i=0;i<cloth.length;i++) {
 				cloth[i].setClean(true);
 			}
-			
-			return laundryObj;
 		}
 }
 

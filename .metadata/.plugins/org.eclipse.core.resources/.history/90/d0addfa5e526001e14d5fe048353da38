@@ -1,9 +1,0 @@
-package jungle.cave;
-
-public class Tiger {
-
-	protected void main() {
-		// TODO Auto-generated method stub
-		System.out.println("Hi Tiger");
-	}
-}
