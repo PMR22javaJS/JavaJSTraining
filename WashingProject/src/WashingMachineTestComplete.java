@@ -1,6 +1,3 @@
-import java.util.InputMismatchException;
-import java.util.Scanner;
-
 class OutOfTime extends Exception{
 	OutOfTime(String msg){
 		super(msg);
@@ -438,10 +435,7 @@ class Electricity {
 	}
 	public void setSupplier(String supplier) {
 		this.supplier = supplier;
-	}
-	
-	
-	
+	}	
 }
 
 class Cloth {
@@ -493,8 +487,5 @@ class Cloth {
 	}
 	public void setClean(boolean clean) {
 		this.clean = clean;
-	}
-	
-
-	
+	}	
 }
