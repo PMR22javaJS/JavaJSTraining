@@ -1,0 +1,23 @@
+@charset "ISO-8859-1";
+body{
+	text-align: center;
+}
+h1{
+		background-color: skyblue; 
+		color: brown;
+	}
+	
+h2{
+		color:darkgreen;
+}
+
+label{
+		color:darkblue ; 
+		font-size: 15px;
+}
+
+button{
+		padding:  15px; 
+		background-color: cornflowerblue; 
+		font-size: 20px;	
+}

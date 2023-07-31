@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Login here</title>
+<link rel="stylesheet" href="mystyle.css">
+</head>
+<body>
+		<script src="Validation.js"></script>
+		<h1>My Airlines</h1>
+		<hr>
+		<h2>Login Here</h2>
+		
+		<form action="DashBoard.html">
+			<label>Enter username</label> <input onkeyup="clearNameErr()" type=text     id="uname"><span id="nameErr"></span><br>
+			<label>Enter password</label> <input onkeyup="clearPassErr()" type=password id="upass"><span id="passErr"></span><br>
+			
+			Not a member yet?<a href="Register.html">Register</a><br>
+			Reset password? Click <a href="ResetPassword.html">Here</a><br>	
+			Forgot password? Click <a href="ForgotPassword.html">Here</a><br>
+			<button onclick="return wow();" type="submit">Login</button>	
+		</form>
+		<button onclick="clearForm()" style="background-color: red">Clear</button>	
+	
+</body>
+</html>
