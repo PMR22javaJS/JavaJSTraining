@@ -1,23 +1,22 @@
-@charset "ISO-8859-1";
-body{
-	text-align: center;
-}
-h1{
-		background-color: skyblue; 
-		color: brown;
-	}
+@charset "UTF-8";
+body {
 	
-h2{
-		color:darkgreen;
+	text-align: center	
 }
-
-label{
-		color:darkblue ; 
-		font-size: 15px;
-}
-
-button{
-		padding:  15px; 
-		background-color: cornflowerblue; 
-		font-size: 20px;	
-}
+		h1 {
+			background-color:red; 
+			color: blue;
+		}
+		h2 {
+			color: green;
+		}
+		label {
+			color: blue; 
+			font-size: 20px;
+		}
+		input {
+			color: black; font-size: 20px
+		}
+		button {
+			padding: 15px; background-color: magenta; font-size: 20px
+		}

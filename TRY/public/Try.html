@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<p>The Start</p>
+	<script>
+	/*alert(1/0);
+	alert("kdjs"/2);
+	
+	const begInt=32145234514252234523452345234523452345231541n;
+	alert(begInt)
+	
+	alert(typeof 0);
+	alert(typeof "foo");
+	alert(typeof NaN);
+	alert(typeof 8/0);
+	
+	alert(Number("true"));
+	alert(1);
+	alert(Boolean(0));
+	alert(Boolean("areaf"));
+	
+	let s = "my" + "string"; alert(s); // mystring
+	//String concatenation and conversion is a 
+	//special feature of the binary plus +
+	alert( '1' + 2 ); // "12"
+	alert( 2 + '1' ); // "21"
+	alert(2 + 2      + '1' ); // "41" and not "221"
+//		|        |
+//	 binary add    convert and concat
+	alert('1' + 2      + 2 ); // "14" expected but found "122"
+	let i=10;	alert(i);i++;		alert(i);  alert(++i);
+
+	alert( 2 - '1' ); // 1
+	alert( '6' / '2' ); // 3
+
+	let x = 1;	alert( +x ); // 1
+	let y = -2;	alert( +y ); // -2
+
+	// Converts non-numbers
+	alert( +true ); // 1
+	alert( +"" );   // 0
+*/
+	
+	/*alert("Hello");
+	let age = prompt('How old are you?', 18);
+
+	alert(`You are ${age} years old!`); // You are 100 years old!	
+
+	let test1 = prompt("Test"); // on cancel it would assign 'undefined'
+	alert(test1);
+
+	let test2 = prompt("Test",''); // <-- for IE
+	alert(test2);
+
+	let isBoss = confirm("Are you the boss?");
+
+	alert( isBoss ); // true if OK is pressed */
+	
+	 let x=100;
+    let y=x;
+    
+	function sayHi() {
+		console.log("Hello1");alert( "Hello2" );console.log("Hello3");
+	}	
+	alert( sayHi ); /* shows the function code*/ sayHi(); // would run it
+	
+	function greet() {   // (1) create
+      console.log("Good Morning1");alert( "Good Morning2" );
+	  console.log("Good Morning3");
+	}// semicolon not required, like , if, switch, for, while need not require semicolon
+
+	let whatsup1 = greet;    /* (2) copy*/ let whatsup2 = whatsup1;
+	whatsup1(); // Good morning // (3) run the copy (it works)!
+	greet();  // Good morning  //     this still works too (why wouldn't it)
+	whatsup2();
+
+		
+	let greetTheWorld = function () { // function expressed
+		 console.log("Hows life?blue1");alert( "Hows life?blue2" );	
+		 console.log("Hows life?blue3");return 500;
+		}   ; // semicolon here as a part to terminate this assignment statement
+	alert(greetTheWorld);		let greetTheWorldAgain = greetTheWorld;
+	greetTheWorld();	greetTheWorldAgain();
+
+	
+	//we are calling foo
+	foo(100,200, function (){ 
+		alert(300); 
+	} );
+	
+	function foo(x,y,z)
+	{
+		z();//calling back that annonymous
+	}
+
+	processThis(
+				function () {
+		
+				},
+				function () {
+		
+				},
+				100);
+	
+	processThis(
+			function() {
+				//unique and new logic
+			},		
+			function() {
+				//unique and new logic
+			},
+			200
+	)	
+	
+	</script>
+	<p>The End</p>
+</body>
+</html>

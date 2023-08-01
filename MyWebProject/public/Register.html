@@ -9,6 +9,9 @@
 	
 	
 	<body>
+		<script src="Validation.js">
+		</script>
+		
 		<h1>My Airlines</h1>
 		<hr>
 		<h2>Register Here</h2>
@@ -16,7 +19,7 @@
 		<form action="Login.html">
 	
 		
-		<table style="margin-left: auto; margin-right: auto;">
+		<table style="margin-right: auto; margin-left: auto">
 		
 		
 			<tr>
@@ -25,7 +28,7 @@
 				</td>
 				
 				<td> 
-					<input  type=text name="ueamil">
+					<input  type=text id="uemail">
 				</td>
 			</tr>
 			
@@ -35,7 +38,7 @@
 				</td>
 				
 				<td>
-				 	<input  type=date     name="udob">
+				 	<input  type=date     id="udob">
 				</td>
 			</tr>
 			
@@ -45,7 +48,7 @@
 				</td>
 				
 				<td>
-					<input  type=text     name="uname">
+					<input  type=text     id="urname">
 				</td>
 			</tr>
 			
@@ -54,7 +57,7 @@
 					<label>Enter password</label>
 				</td>
 				<td>
-					 <input  type=password name="upass">
+					 <input  type=password id="urpass">
 				</td>
 			</tr>
 			
@@ -63,7 +66,7 @@
 			</tr>
 			
 			<tr>
-				<td> <button type="submit">Register</button> </td>	
+				<td> <button onclick="return  validateEmail() && validateAge() && validateRegisterName() && validateRegisterPassword() " type="submit">Register</button> </td>	
 			</tr>
 			
 			<tr>
