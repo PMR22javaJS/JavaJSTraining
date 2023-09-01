@@ -139,5 +139,6 @@
 
 -> connect bus "eService Object Generator" "type_pmrTraining" "" relationship "eService Number Generator" to "eService Number Generator" "type_pmrTraining" "";
  
+-> temp query bus pmr* * *; //for displaying all the business objects created
 
 
