@@ -1,0 +1,143 @@
+-> print context;
+
+-> set context user creator;
+
+-> add type pmrTraining;
+
+-> add dimension pmrTime unit hours multiplier 1 offset 0 unit days !default multiplier 8 offset 0;
+
+-> add attribute pmrDuration type integer;
+
+-> mod type pmrTraining add attribute pmrDuration;
+
+-> add type pmrTrainer;
+
+-> add type pmrStudent;
+
+-> add rel pmrTraining-pmrTrainer attribute pmrDuration 
+	from
+		type pmrTraining
+		meaning "was conducted by"
+		cardinality one
+		revision replicate
+		clone none
+		propagatemodify
+		propagateconnection  
+	to
+		type pmrTrainer
+		meaning "conducted the"
+		cardinality one
+		revision float
+		clone none
+		notpropagatemodify
+		notpropagateconnection;	
+
+-> add rel pmrTraining-pmrStudent attribute pmrDuration 
+	from
+		type pmrTraining
+		meaning "was conducted for"
+		cardinality one
+		revision float
+		clone none
+		propagatemodify
+		propagateconnection  
+	to
+		type pmrStudent
+		meaning "attended the"
+		cardinality many
+		revision float
+		clone none
+		notpropagatemodify
+		notpropagateconnection;	
+
+---------------------TNR (Type Name Revision)----------------
+
+-> add bus pmrTraining 3DXPD Jul23 (throw error )
+
+-> add policy pmrTrainingPolicy type pmrTraining sequence A,B,C,....; 			// WRONG
+
+-> mod policy pmrTrainingPolicy add state CREATE public read,show owner all;
+
+-> add bus pmrTraining 3DXPD Jul23 policy pmrTrainingPolicy vault vplm;
+
+-> temp query bus pmr* * *;
+
+-> print bus pmrTraining 3DXPD Jul23;
+
+-> print bus pmrTraining 3DXPD Jul23 select attribute[pmrTraining]
+
+-> print bus pmrTraining 3DXPD Jul23 select attribute[pmrTraining] id;
+
+//TNR replaced with id output from previous command
+-> print bus id select attribute[pmrTraining] id;
+	     |||
+(we have to write ids from the upper command)  	
+
+-> add bus pmrTraining 3DXPD Aug23 policy pmrTrainingPolicy vault "eService Sample";
+
+-> temp query bus pmrTraining * * vault *;
+
+-> temp query bus pmrTraining * * vault * querytrigger;
+
+-> temp query bus pmrTraining * * select vault id; (for printing id of attributes of differnet revision business obj)
+
+-> mod bus "id" pmrDuration "value"; (in place of id and value , we have to write the id given)
+
+
+-----------------------------------------------------JPO------------------------------------------------
+
+-> first create folder inside src/java "jpo23x";
+
+-> inside mql terminal , run command "extract source "path of the jpo folder inside file explorer";
+
+-> save as the "_jpo" file and change it's name and write methods inside the class;
+
+-> inside the mql terminal , run command ->>>>> insert program "changed jpo file path";
+
+-> compile program TrainingAction;
+
+-> execute program  TrainingAction;
+
+-> print program TrainingAction select code; // shows blueprint of java code in mql
+
+-> execute program TrainingAction -method createTrainer;
+
+-> trigger on // if once ON, it will be ON untill it is turned OFF
+
+-> mod type pmrTraining add trigger create action TrainingAction input "-method createTrainer ${NAME} ${POLICY}";
+
+-> insert program "path of mxJPO";
+
+-> compile program TrainingAction;
+
+-> add bus pmrTraining 3DXPD1 Jun23 policy pmrTrainingPolicy vault vplm;
+
+
+-------------------------------CREATE SYMBOLIC TYPE & POLICY INSIDE LOCALHOST 8070-------------------------------------
+
+-> http://localhost:8070/internal/common/emxNavigator.jsp?collabSpace=Default
+
+					[OPEN MQL TERMINAL]
+
+-> add businessobject 'eService Object Generator' type_pmrTraining 1 policy 'eService Object Generator' vault 'eService Administration';
+
+-> print type 'eService Object Generator' !history;
+
+-> mod bus 'eService Object Generator' type_pmrTraining 1 'eService Safety Policy' policy_pmrTrainingPolicy 'eService Processing Time Limit' 60 'eService Safety Vault' vault_vplm 'eService Retry Count' 5 'eService Retry Delay' 1000 'eService Name Prefix' 3DXPD;
+
+-> add businessobject 'eService Number Generator' type_pmrTraining 1 policy 'eService Object Generator' vault 'eService Administration';
+
+-> print type 'eService Number Generator' !history;
+
+-> mod bus 'eService Number Generator' type_pmrTraining 1 'eService Next Number' 0000100;
+
+-> connect bus "eService Object Generator" "type_pmrTraining" "" relationship "eService Number Generator" to "eService Number Generator" "type_pmrTraining" "";
+
+-> temp query bus * type_pmrTraining * select id; (two bus object that we have created Object & Number Generator)
+
+-> copy bus "bus_id" to type_pmrTraining ""; (repeat for n numbers of business object)
+
+-> connect bus "eService Object Generator" "type_pmrTraining" "" relationship "eService Number Generator" to "eService Number Generator" "type_pmrTraining" "";
+ 
+
+
