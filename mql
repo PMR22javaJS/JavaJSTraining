@@ -88,7 +88,9 @@
 
 -> first create folder inside src/java "jpo23x";
 
--> inside mql terminal , run command "extract source "path of the jpo folder inside file explorer";
+-> inside mql terminal , run command ->  extract program * source "path of the jpo folder inside file explorer";
+
+-> change file BR_Export and save it as "save as" option and change name to TrainingAction;
 
 -> save as the "_jpo" file and change it's name and write methods inside the class;
 
@@ -140,5 +142,28 @@
 -> connect bus "eService Object Generator" "type_pmrTraining" "" relationship "eService Number Generator" to "eService Number Generator" "type_pmrTraining" "";
  
 -> temp query bus pmr* * *; //for displaying all the business objects created
+
+
+------------------------------------------UI COMMANDS----------------------------------------------------------
+
+-> list menu My*;
+
+-> print menu "My Enovia";
+
+-> print menu "My Enovia" !history;
+
+-> add menu pmrMyCentral;
+
+-> mod menu pmrMyCentral label "My Central";
+
+-> mod menu "My Enovia" add menu pmrMyCentral;
+
+-> add command pmrListTrainings;
+
+-> mod menu pmrMyCentral add command pmrListTrainings;
+
+-> mod command pmrListTrainings label "List Trainings" href "emxTable.jsp";
+
+-> 
 
 
