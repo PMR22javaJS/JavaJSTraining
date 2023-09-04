@@ -162,8 +162,17 @@
 
 -> mod menu pmrMyCentral add command pmrListTrainings;
 
--> mod command pmrListTrainings label "List Trainings" href "emxTable.jsp";
+-> mod command pmrListTrainings label "List Trainings" href "emxIndentedTable.jsp";
 
--> 
+-> add table pmrListTrainingTable system column name name label Name businessobject name;
+
+-> mod table pmrListTrainingTable system column name revision label Revision businessobject revision;
+
+-> mod table pmrListTrainingTable system column name duration label Duration businessobject attribute[pmrDuration];
+
+----------------https://dsdoc.dsone.3ds.com/3DEXPERIENCER2018x/win_b64.doc/English/DSDocDSExa.htm?XMLToc=DSDocDS.xml&contextscope=onpremise---------------------//docs
+
+-> mod command pmrListTrainings href "emxIndentedTable.jsp?table=groListTrainingTable&program=groPopulateTableJPO:findObject";
+
 
 
