@@ -170,9 +170,19 @@
 
 -> mod table pmrListTrainingTable system column name duration label Duration businessobject attribute[pmrDuration];
 
+-> mod table pmrListTrainingTable system column modify 1 name name;
+
+-> mod table pmrListTrainingTable system column modify 2 name revision;
+
+-> mod table pmrListTrainingTable system column modify 3 name duration;
+
 ----------------https://dsdoc.dsone.3ds.com/3DEXPERIENCER2018x/win_b64.doc/English/DSDocDSExa.htm?XMLToc=DSDocDS.xml&contextscope=onpremise---------------------//docs
 
--> mod command pmrListTrainings href "emxIndentedTable.jsp?table=groListTrainingTable&program=groPopulateTableJPO:findObject";
+-> First create JPO file with pmrPopulateTable and then repeat same steps of insert , compile and execute in mql;
+
+-> mod command pmrListTrainings href "${COMMON_DIR}/emxIndentedTable.jsp?table=pmrListTrainingTable&program=pmrPopulateTable:findObject"; 
+ 
+
 
 
 
