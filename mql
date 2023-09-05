@@ -192,6 +192,10 @@
 
 -> mod table pmrListTrainingTable system column modify 1 href "${SUITE_DIR}/emxForm.jsp?form=pmrTrainingForm";
 
--> mod table pmrListTrainingTable system column modify 1 setting "Registerd Suite" Framework;
+-> mod table pmrListTrainingTable system column modify 1 setting "Registered Suite" Framework;
 
 -> mod table pmrListTrainingTable system column modify 1 href ${SUITE_DIR}/emxForm.jsp?form=pmrTrainingForm&editLink=true;
+
+-> mod form pmrTrainingForm field modify 1 setting Editable false; // for making a field inside form as non editable eg. name revision
+
+-> mod form pmrTrainingForm field modify 2 setting Editable false;
