@@ -182,7 +182,16 @@
 
 -> mod command pmrListTrainings href "${COMMON_DIR}/emxIndentedTable.jsp?table=pmrListTrainingTable&program=pmrPopulateTable:findObject"; 
  
+-> add form pmrTrainingForm web field name name label Name businessobject name;
 
+-> mod form pmrTrainingForm web field name name label Name businessobject name;
 
+-> mod form pmrTrainingForm web field name revision label Revision businessobject revision;
 
+-> mod form pmrTrainingForm web field name duration label Duration businessobject attribute[pmrDuration];
 
+-> mod table pmrListTrainingTable system column modify 1 href "${SUITE_DIR}/emxForm.jsp?form=pmrTrainingForm";
+
+-> mod table pmrListTrainingTable system column modify 1 setting "Registerd Suite" Framework;
+
+-> mod table pmrListTrainingTable system column modify 1 href ${SUITE_DIR}/emxForm.jsp?form=pmrTrainingForm&editLink=true;
