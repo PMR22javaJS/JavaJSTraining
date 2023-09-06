@@ -184,8 +184,6 @@
  
 -> add form pmrTrainingForm web field name name label Name businessobject name;
 
--> mod form pmrTrainingForm web field name name label Name businessobject name;
-
 -> mod form pmrTrainingForm web field name revision label Revision businessobject revision;
 
 -> mod form pmrTrainingForm web field name duration label Duration businessobject attribute[pmrDuration];
@@ -199,3 +197,25 @@
 -> mod form pmrTrainingForm field modify 1 setting Editable false; // for making a field inside form as non editable eg. name revision
 
 -> mod form pmrTrainingForm field modify 2 setting Editable false;
+
+-> mod form pmrTrainingForm field modify 3 setting "Field Type" attribute;
+
+-> mod form pmrTrainingForm web field modify name duration setting "Field Type" program;
+
+-> mod form pmrTrainingForm web field modify name duration setting "program" pmrTrainingJPO;
+
+-> mod form pmrTrainingForm web field modify name duration setting "function" readObject;
+
+//-> modify form pmrTrainingForm field modify 3 setting "function" readObject;
+
+-> mod form pmrTrainingForm web field modify name duration setting "Update Program" pmrTrainingJPO;
+
+-> mod form pmrTrainingForm web field modify name duration setting "Update Function" updateObject;
+
+
+
+
+
+
+
+
