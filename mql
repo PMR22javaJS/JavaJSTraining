@@ -170,6 +170,8 @@
 
 -> mod table pmrListTrainingTable system column name duration label Duration businessobject attribute[pmrDuration];
 
+-> mod table pmrListTrainingTable system column name policy label Policy businessobject policy; //now the duration will show in the UI
+
 -> mod table pmrListTrainingTable system column modify 1 name name;
 
 -> mod table pmrListTrainingTable system column modify 2 name revision;
