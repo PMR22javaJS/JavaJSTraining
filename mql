@@ -214,6 +214,40 @@
 
 -> mod form pmrTrainingForm web field modify name duration setting "Update Function" updateObject;
 
+-> mod table pmrListTrainingTable system column modify 1 setting "Target Location" slidein; //to set slidein
+
+//add setting to coumn to get year
+-> mod table pmrListTrainingTable system column name year label Year businessobject year;
+
+-> mod table pmrListTrainingTable system column modify 5 setting "Column Type" program;
+
+-> mod table pmrListTrainingTable system column modify 5 setting "program" pmrPopulateTable  ;
+
+-> mod table pmrListTrainingTable system column modify 5 setting "function" populateCurrentYear ;// crash table
+
+///hasAccess
+-> mod table pmrListTrainingTable system column modify 2 setting "Access Program" pmrPopulateTable;
+
+-> mod table pmrListTrainingTable system column modify 2 setting "Access Funtion" hasAccess; 
+
+//delete
+-> add menu pmrTableToolbar;
+
+-> mod menu pmrTableToolbar add command AEFGenericDelete;
+
+-> mod command pmrListTrainings href "emxIndentedTable.jsp?table=pmrListTrainingTable&program=pmrPopulateTable:findObject&toolbar=pmrTableToolbar&selection=multiple";  
+
+
+//vault
+-> mod form mhr18TrainingForm web field name vault label Vault businessobject vault;
+
+-> mod form mhr18TrainingForm web field modify name vault setting "Input Type" combobox;
+
+-> mod form mhr18TrainingForm web field modify name vault setting "Range Program" mhr18TrainingJPO;
+
+-> mod form mhr18TrainingForm web field modify name vault setting "Range Function" getVault;
+
+
 
 
 
