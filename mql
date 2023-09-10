@@ -159,6 +159,15 @@
 
 ---------------------------------------------------- UI COMMANDS----------------------------------------------------------
 
+
+						MENU 		: 	pmrMyCentral
+						COMMAND 	: 	pmrListTrainings
+						TABLE 		: 	pmrListTrainingTable
+						FORM 		: 	pmrTrainingForm
+						MENU 		: 	pmrTableToolbar
+
+
+
 	-> list menu My*;
 
 	-> print menu "My Enovia";
@@ -292,7 +301,7 @@
 	-> add menu pmrTableToolbar;
 
 	-> mod menu pmrTableToolbar add command AEFGenericDelete;																	
-	-> mod command pmrListTrainings href "emxIndentedTable.jsp?table=pmrListTrainingTable&program=pmrPopulateTable:findObject&toolbar=pmrTableToolbar&selection=multiple";  
+	-> mod command pmrListTrainings href "emxIndentedTable.jsp?				table=pmrListTrainingTable&program=pmrPopulateTable:findObject&toolbar=pmrTableToolbar&selection=multiple";  
 
 
 
