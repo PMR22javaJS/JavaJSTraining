@@ -50,202 +50,261 @@
 		notpropagatemodify
 		notpropagateconnection;	
 
----------------------TNR (Type Name Revision)----------------
 
--> add bus pmrTraining 3DXPD Jul23 (throw error )
 
--> add policy pmrTrainingPolicy type pmrTraining sequence A,B,C,....; 			// WRONG
 
--> mod policy pmrTrainingPolicy add state CREATE public read,show owner all;
 
--> add bus pmrTraining 3DXPD Jul23 policy pmrTrainingPolicy vault vplm;
+-----------------------------------------------  TNR (Type Name Revision) --------------------------------------------------
 
--> temp query bus pmr* * *;
+	-> add bus pmrTraining 3DXPD Jul23 (throw error )
 
--> print bus pmrTraining 3DXPD Jul23;
+	-> add policy pmrTrainingPolicy type pmrTraining sequence A,B,C,....; 			// WRONG
 
--> print bus pmrTraining 3DXPD Jul23 select attribute[pmrTraining]
+	-> mod policy pmrTrainingPolicy add state CREATE public read,show owner all;
 
--> print bus pmrTraining 3DXPD Jul23 select attribute[pmrTraining] id;
+	-> add bus pmrTraining 3DXPD Jul23 policy pmrTrainingPolicy vault vplm;
+	
+	-> temp query bus pmr* * *;
 
-//TNR replaced with id output from previous command
--> print bus id select attribute[pmrTraining] id;
-	     |||
-(we have to write ids from the upper command)  	
+	-> print bus pmrTraining 3DXPD Jul23;
 
--> add bus pmrTraining 3DXPD Aug23 policy pmrTrainingPolicy vault "eService Sample";
+	-> print bus pmrTraining 3DXPD Jul23 select attribute[pmrTraining]
 
--> temp query bus pmrTraining * * vault *;
+	-> print bus pmrTraining 3DXPD Jul23 select attribute[pmrTraining] id;
 
--> temp query bus pmrTraining * * vault * querytrigger;
+	//TNR replaced with id output from previous command
+	-> print bus id select attribute[pmrTraining] id;
+	    			 |||
+	(we have to write ids from the upper command)  	
 
--> temp query bus pmrTraining * * select vault id; (for printing id of attributes of differnet revision business obj)
+	-> add bus pmrTraining 3DXPD Aug23 policy pmrTrainingPolicy vault "eService Sample";
+	
+	-> temp query bus pmrTraining * * vault *;
 
--> mod bus "id" pmrDuration "value"; (in place of id and value , we have to write the id given)
+	-> temp query bus pmrTraining * * vault * querytrigger;
+
+	-> temp query bus pmrTraining * * select vault id; (for printing id of attributes of differnet revision business obj)
+
+	-> mod bus "id" pmrDuration "value"; (in place of id and value , we have to write the id given)
+
+
+
 
 
 -----------------------------------------------------JPO------------------------------------------------
 
--> first create folder inside src/java "jpo23x";
+	-> first create folder inside src/java "jpo23x";
 
--> inside mql terminal , run command ->  extract program * source "path of the jpo folder inside file explorer";
+	-> inside mql terminal , run command ->  extract program * source "path of the jpo folder inside file explorer";
 
--> change file BR_Export and save it as "save as" option and change name to TrainingAction;
+	-> change file BR_Export and save it as "save as" option and change name to TrainingAction;
 
--> save as the "_jpo" file and change it's name and write methods inside the class;
+	-> save as the "_jpo" file and change it's name and write methods inside the class;
 
--> inside the mql terminal , run command ->>>>> insert program "changed jpo file path";
+	-> inside the mql terminal , run command ->>>>> insert program "changed jpo file path";
+	
+	-> compile program TrainingAction;
 
--> compile program TrainingAction;
+	-> execute program  TrainingAction;
 
--> execute program  TrainingAction;
+	-> print program TrainingAction select code; // shows blueprint of java code in mql
 
--> print program TrainingAction select code; // shows blueprint of java code in mql
+	-> execute program TrainingAction -method createTrainer;
 
--> execute program TrainingAction -method createTrainer;
+	-> trigger on // if once ON, it will be ON untill it is turned OFF
 
--> trigger on // if once ON, it will be ON untill it is turned OFF
+	-> mod type pmrTraining add trigger create action TrainingAction input "-method createTrainer ${NAME} ${POLICY}";
 
--> mod type pmrTraining add trigger create action TrainingAction input "-method createTrainer ${NAME} ${POLICY}";
+	-> insert program "path of mxJPO";
 
--> insert program "path of mxJPO";
+	-> compile program TrainingAction;
+	
+	-> add bus pmrTraining 3DXPD1 Jun23 policy pmrTrainingPolicy vault vplm;
 
--> compile program TrainingAction;
 
--> add bus pmrTraining 3DXPD1 Jun23 policy pmrTrainingPolicy vault vplm;
+
 
 
 -------------------------------CREATE SYMBOLIC TYPE & POLICY INSIDE LOCALHOST 8070-------------------------------------
 
--> http://localhost:8070/internal/common/emxNavigator.jsp?collabSpace=Default
+	-> http://localhost:8070/internal/common/emxNavigator.jsp?collabSpace=Default
 
-					[OPEN MQL TERMINAL]
+						[OPEN MQL TERMINAL]
 
--> add businessobject 'eService Object Generator' type_pmrTraining 1 policy 'eService Object Generator' vault 'eService Administration';
+	-> add businessobject 'eService Object Generator' type_pmrTraining 1 policy 'eService Object Generator' vault 'eService Administration';
 
--> print type 'eService Object Generator' !history;
+	-> print type 'eService Object Generator' !history;
 
--> mod bus 'eService Object Generator' type_pmrTraining 1 'eService Safety Policy' policy_pmrTrainingPolicy 'eService Processing Time Limit' 60 'eService Safety Vault' vault_vplm 'eService Retry Count' 5 'eService Retry Delay' 1000 'eService Name Prefix' 3DXPD;
+	-> mod bus 'eService Object Generator' type_pmrTraining 1 'eService Safety Policy' policy_pmrTrainingPolicy 'eService Processing Time Limit' 60 		'eService Safety Vault' vault_vplm 'eService Retry Count' 5 'eService Retry Delay' 1000 'eService Name Prefix' 3DXPD;
 
--> add businessobject 'eService Number Generator' type_pmrTraining 1 policy 'eService Object Generator' vault 'eService Administration';
+	-> add businessobject 'eService Number Generator' type_pmrTraining 1 policy 'eService Object Generator' vault 'eService Administration';
 
--> print type 'eService Number Generator' !history;
+	-> print type 'eService Number Generator' !history;
 
--> mod bus 'eService Number Generator' type_pmrTraining 1 'eService Next Number' 0000100;
+	-> mod bus 'eService Number Generator' type_pmrTraining 1 'eService Next Number' 0000100;
 
--> connect bus "eService Object Generator" "type_pmrTraining" "" relationship "eService Number Generator" to "eService Number Generator" "type_pmrTraining" "";
+	-> connect bus "eService Object Generator" "type_pmrTraining" "" relationship "eService Number Generator" to "eService Number Generator" 			"type_pmrTraining" "";
 
--> temp query bus * type_pmrTraining * select id; (two bus object that we have created Object & Number Generator)
+	-> temp query bus * type_pmrTraining * select id; (two bus object that we have created Object & Number Generator)
 
--> copy bus "bus_id" to type_pmrTraining ""; (repeat for n numbers of business object)
+	-> copy bus "bus_id" to type_pmrTraining ""; (repeat for n numbers of business object)
 
--> connect bus "eService Object Generator" "type_pmrTraining" "" relationship "eService Number Generator" to "eService Number Generator" "type_pmrTraining" "";
+	-> connect bus "eService Object Generator" "type_pmrTraining" "" relationship "eService Number Generator" to "eService Number Generator" 			"type_pmrTraining" "";
  
--> temp query bus pmr* * *; //for displaying all the business objects created
+	-> temp query bus pmr* * *; //for displaying all the business objects created
 
 
-------------------------------------------UI COMMANDS----------------------------------------------------------
 
--> list menu My*;
 
--> print menu "My Enovia";
 
--> print menu "My Enovia" !history;
+---------------------------------------------------- UI COMMANDS----------------------------------------------------------
 
--> add menu pmrMyCentral;
+	-> list menu My*;
 
--> mod menu pmrMyCentral label "My Central";
+	-> print menu "My Enovia";
 
--> mod menu "My Enovia" add menu pmrMyCentral;
+	-> print menu "My Enovia" !history;
 
--> add command pmrListTrainings;
+	-> add menu pmrMyCentral;
 
--> mod menu pmrMyCentral add command pmrListTrainings;
+	-> mod menu pmrMyCentral label "My Central";
 
--> mod command pmrListTrainings label "List Trainings" href "emxIndentedTable.jsp";
+	-> mod menu "My Enovia" add menu pmrMyCentral;
 
--> add table pmrListTrainingTable system column name name label Name businessobject name;
+	-> add command pmrListTrainings;
 
--> mod table pmrListTrainingTable system column name revision label Revision businessobject revision;
+	-> mod menu pmrMyCentral add command pmrListTrainings;
 
--> mod table pmrListTrainingTable system column name duration label Duration businessobject attribute[pmrDuration];
+	-> mod command pmrListTrainings label "List Trainings" href "emxIndentedTable.jsp";
 
--> mod table pmrListTrainingTable system column name policy label Policy businessobject policy; //now the duration will show in the UI
+----------------https://dsdoc.dsone.3ds.com/3DEXPERIENCER2018x/win_b64.doc/English/DSDocDSExa.htm?		XMLToc=DSDocDS.xml&contextscope=onpremise---------------------//docs
 
--> mod table pmrListTrainingTable system column modify 1 name name;
+	-> First create JPO file with pmrPopulateTable and then repeat same steps of insert , compile and execute in mql;
 
--> mod table pmrListTrainingTable system column modify 2 name revision;
 
--> mod table pmrListTrainingTable system column modify 3 name duration;
 
-----------------https://dsdoc.dsone.3ds.com/3DEXPERIENCER2018x/win_b64.doc/English/DSDocDSExa.htm?XMLToc=DSDocDS.xml&contextscope=onpremise---------------------//docs
 
--> First create JPO file with pmrPopulateTable and then repeat same steps of insert , compile and execute in mql;
 
--> mod command pmrListTrainings href "${COMMON_DIR}/emxIndentedTable.jsp?table=pmrListTrainingTable&program=pmrPopulateTable:findObject"; 
+----------------------------------------------------- ADD TABLE --------------------------------------------------------------
+
+	-> add table pmrListTrainingTable system column name name label Name businessobject name;
+
+	-> mod table pmrListTrainingTable system column name revision label Revision businessobject revision;
+
+	-> mod table pmrListTrainingTable system column name duration label Duration businessobject attribute[pmrDuration];
+
+	-> mod table pmrListTrainingTable system column name policy label Policy businessobject policy; //now the duration will show in the UI
+
+	-> mod table pmrListTrainingTable system column name year label Year businessobject year;
+
+	-> mod table pmrListTrainingTable system column modify 1 name name;
+
+	-> mod table pmrListTrainingTable system column modify 2 name revision;
+
+	-> mod table pmrListTrainingTable system column modify 3 name duration;
+
+	-> mod command pmrListTrainings href "${COMMON_DIR}/emxIndentedTable.jsp?table=pmrListTrainingTable&program=pmrPopulateTable:findObject"; 
+
+
+
+
+
+------------------------------------------------------- ADD FORM  ----------------------------------------
  
--> add form pmrTrainingForm web field name name label Name businessobject name;
+	-> add form pmrTrainingForm web field name name label Name businessobject name;
 
--> mod form pmrTrainingForm web field name revision label Revision businessobject revision;
+	-> mod form pmrTrainingForm web field name revision label Revision businessobject revision;
 
--> mod form pmrTrainingForm web field name duration label Duration businessobject attribute[pmrDuration];
-
--> mod table pmrListTrainingTable system column modify 1 href "${SUITE_DIR}/emxForm.jsp?form=pmrTrainingForm";
-
--> mod table pmrListTrainingTable system column modify 1 setting "Registered Suite" Framework;
-
--> mod table pmrListTrainingTable system column modify 1 href ${SUITE_DIR}/emxForm.jsp?form=pmrTrainingForm&editLink=true;
-
--> mod form pmrTrainingForm field modify 1 setting Editable false; // for making a field inside form as non editable eg. name revision
-
--> mod form pmrTrainingForm field modify 2 setting Editable false;
-
--> mod form pmrTrainingForm field modify 3 setting "Field Type" attribute;
-
--> mod form pmrTrainingForm web field modify name duration setting "Field Type" program;
-
--> mod form pmrTrainingForm web field modify name duration setting "program" pmrTrainingJPO;
-
--> mod form pmrTrainingForm web field modify name duration setting "function" readObject;
-
-//-> modify form pmrTrainingForm field modify 3 setting "function" readObject;
-
--> mod form pmrTrainingForm web field modify name duration setting "Update Program" pmrTrainingJPO;
-
--> mod form pmrTrainingForm web field modify name duration setting "Update Function" updateObject;
-
--> mod table pmrListTrainingTable system column modify 1 setting "Target Location" slidein; //to set slidein
-
-//add setting to coumn to get year
--> mod table pmrListTrainingTable system column name year label Year businessobject year;
-
--> mod table pmrListTrainingTable system column modify 5 setting "Column Type" program;
-
--> mod table pmrListTrainingTable system column modify 5 setting "program" pmrPopulateTable  ;
-
--> mod table pmrListTrainingTable system column modify 5 setting "function" populateCurrentYear ;// crash table
-
-///hasAccess
--> mod table pmrListTrainingTable system column modify 2 setting "Access Program" pmrPopulateTable;
-
--> mod table pmrListTrainingTable system column modify 2 setting "Access Funtion" hasAccess; 
-
-//delete
--> add menu pmrTableToolbar;
-
--> mod menu pmrTableToolbar add command AEFGenericDelete;
-
--> mod command pmrListTrainings href "emxIndentedTable.jsp?table=pmrListTrainingTable&program=pmrPopulateTable:findObject&toolbar=pmrTableToolbar&selection=multiple";  
+	-> mod form pmrTrainingForm web field name duration label Duration businessobject attribute[pmrDuration];
 
 
-//vault
--> mod form mhr18TrainingForm web field name vault label Vault businessobject vault;
 
--> mod form mhr18TrainingForm web field modify name vault setting "Input Type" combobox;
+----------------------------------------------- CONNECT FORM TO TABLE ------------------------------------------
 
--> mod form mhr18TrainingForm web field modify name vault setting "Range Program" mhr18TrainingJPO;
+	-> mod table pmrListTrainingTable system column modify 1 href "${SUITE_DIR}/emxForm.jsp?form=pmrTrainingForm";
 
--> mod form mhr18TrainingForm web field modify name vault setting "Range Function" getVault;
+	-> mod table pmrListTrainingTable system column modify 1 setting "Registered Suite" Framework;
+
+
+
+---------------------------------- ENABLE FIRST COLUMN OF TABLE FOR EDIATBLE (EDIT BUTTON) ---------------------------------
+
+	-> mod table pmrListTrainingTable system column modify 1 href ${SUITE_DIR}/emxForm.jsp?form=pmrTrainingForm&editLink=true;
+
+
+
+
+------------------------------------- DISABLE COLUMNS OF FORM FOR MAKING IT NOT EDITABLE -----------------------------------------
+
+	-> mod form pmrTrainingForm field modify 1 setting Editable false; 
+
+	-> mod form pmrTrainingForm field modify 2 setting Editable false;
+
+
+
+------------------------------------------------ ADDING SETTINGS TO FORM ------------------------------------
+
+	-> mod form pmrTrainingForm field modify 3 setting "Field Type" attribute;
+
+	-> mod form pmrTrainingForm web field modify name duration setting "Field Type" program;
+
+	-> mod form pmrTrainingForm web field modify name duration setting "program" pmrTrainingJPO;
+
+	-> mod form pmrTrainingForm web field modify name duration setting "function" readObject;
+
+		//-> modify form pmrTrainingForm field modify 3 setting "function" readObject;
+
+	-> mod form pmrTrainingForm web field modify name duration setting "Update Program" pmrTrainingJPO;
+
+	-> mod form pmrTrainingForm web field modify name duration setting "Update Function" updateObject;
+
+
+
+--------------------------------------------- ADD SETTING FOR TARGET LOCATION -------------------------------
+
+	-> mod table pmrListTrainingTable system column modify 1 setting "Target Location" slidein; //to set slidein avoid buffering
+
+
+
+--------------------------------- ADD COLUMN FOR CURRENT YEAR & MOD FOR ADDING SETTING AND FUNCTION--------------------------
+
+	-> mod table pmrListTrainingTable system column name year label Year businessobject year;
+
+	-> mod table pmrListTrainingTable system column modify 5 setting "Column Type" program;
+
+	-> mod table pmrListTrainingTable system column modify 5 setting "program" pmrPopulateTable  ;
+
+	-> mod table pmrListTrainingTable system column modify 5 setting "function" populateCurrentYear ;
+
+
+
+-------------------------------- HAS ACCESS (WILL SHOW THE COLUMN FOR THAT OWNER ONLY) ------------------------------------
+
+	-> mod table pmrListTrainingTable system column modify 2 setting "Access Program" pmrPopulateTable;
+
+	-> mod table pmrListTrainingTable system column modify 2 setting "Access Function" hasAccess; 
+
+
+
+
+----------------------------------- DELETE ( ADD CHECKBOX FOR DELETING BUSINESS OBJ) -----------------------------------
+
+	-> add menu pmrTableToolbar;
+
+	-> mod menu pmrTableToolbar add command AEFGenericDelete;																	
+	-> mod command pmrListTrainings href "emxIndentedTable.jsp?table=pmrListTrainingTable&program=pmrPopulateTable:findObject&toolbar=pmrTableToolbar&selection=multiple";  
+
+
+
+----------------------------------------------- ADD FORM FOR VAULT --------------------------------------------------------
+	
+	-> mod form pmrTrainingForm web field name vault label Vault businessobject vault;
+
+	-> mod form pmrTrainingForm web field modify name vault setting "Input Type" combobox;
+
+	-> mod form pmrTrainingForm web field modify name vault setting "Range Program" pmrTrainingJPO;
+
+	-> mod form pmrTrainingForm web field modify name vault setting "Range Function" getVault;
 
 
 
