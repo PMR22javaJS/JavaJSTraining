@@ -318,6 +318,9 @@
 
 
 
+------------------------------------- IN CASE WE GET INVALID USERNAME/PASSWORD ------------------------------------------------
+
+	-> alter user cbp1 identified by cbp1; 
 
 
 
