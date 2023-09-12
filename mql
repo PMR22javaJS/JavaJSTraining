@@ -127,9 +127,11 @@
 
 -------------------------------CREATE SYMBOLIC TYPE & POLICY INSIDE LOCALHOST 8070-------------------------------------
 
+	Enovia UI -> Utilities -> Property Registration -> Admin Type  
+
 	-> http://localhost:8070/internal/common/emxNavigator.jsp?collabSpace=Default
 
-						[OPEN MQL TERMINAL]
+							[OPEN MQL TERMINAL]
 
 	-> add businessobject 'eService Object Generator' type_pmrTraining 1 policy 'eService Object Generator' vault 'eService Administration';
 
@@ -321,6 +323,68 @@
 ------------------------------------- IN CASE WE GET INVALID USERNAME/PASSWORD ------------------------------------------------
 
 	-> alter user cbp1 identified by cbp1; 
+
+
+
+----------------------------------------------- CREATE BUSINESS OBJECT FORM ------------------------------------------------
+
+	-> add command pmrCreateTraining;
+
+	// (BY DEFAULT "NAME" FIELD IS PRESENT IN THE FORM)-> add form pmrTrgCreateForm web field name name label Name businessobject name;
+
+	-> add form pmrTrgCreateForm  web field name revision label Revision businessobject revision;
+
+	-> mod form pmrTrgCreateForm  web field name duration label Duration businessobject attribute[pmrDuration]; 
+
+	-> mod menu pmrTableToolbar add command pmrCreateTraining;
+
+	-> mod command pmrCreateTraining href ${COMMON_DIR}/emxCreate.jsp?form=pmrTrgCreateForm&type=type_pmrTraining&submitAction=refreshCaller&nameField=both&autoNameChecked=true;
+
+
+
+
+---------------------------------------- OWNER -------------------------------------------------------------
+
+	-> print person admin_platform select assignment;
+
+	-> set context user admin_platform pass admin_platform role "ctx::VPLMAdmin.Company Name.Default";
+
+
+
+
+----------------------- CHECKING ACCESS OF BUS OBJ & MODIFY POLICY FOR SETTING PUBLIC ACCESS -------------------------------
+	
+	-> print bus "BUS_ID" select current.access; // CHECKING ACCESS VALUES
+
+	-> mod policy pmrTrainingPolicy state CREATE public all;
+
+	-> print bus bus_ID select name  policy to from 
+
+	-> print bus [obj_id] select from[relationship_name].id ;
+	
+	-> print connection rel_id; 
+
+
+--------------------------------------  BUSINESS OBJECT (BASE CLASS) ------------------------------------------
+						|
+					DOMAIN OBJECT	(SUB CLASS)
+
+
+----------------------------------------- ADMIN OBJECT (TYPE , RELATIONSHIP ) -----------------------------
+
+
+--------------------------------------- CONNECTION IS INSTANCE OF RELATIONSHIP---------------------------------
+					BUS IS INSTANCE OF BUSINESS OBJECT
+
+
+	
+			FROM			TO		TO			FROM
+			A------------------------------->B<--------------------------------C
+				 REL_A					REL_B
+
+			COMMAND TO GET OBJ_ID FROM A TO C :
+			USING OBJ_ID 			  :	Print bus obj_id_A select from[REL_A].to.to[REL_B].id
+			USING REL_ID			  :	Print connection rel_id_A select from[REL_A].to.to[REL_B].id 
 
 
 
