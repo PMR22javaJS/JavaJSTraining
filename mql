@@ -389,4 +389,20 @@
 
 
 
+-----------------------------------------------------------------------------------------------------------------
+		
+						TOMEE ON BROWSER
 
+ 
+-> \\dsone\plp\tools\tck\tck_init
+
+-> tck_profile R425
+
+-> mkgetpreq -p \\dsone\plp\R425\BSF
+
+-> mkrtv -d
+
+-> mkmk -aug
+
+-> mkrun -webapp 
+ 
