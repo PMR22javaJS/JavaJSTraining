@@ -1,0 +1,41 @@
+------------------------------ AUTONAMING ------------------------------
+
+add attribute pmrStudentDuration type integer;
+
+add policy pmrStudentPolicy type pmrStudent;
+
+mod policy pmrStudentPolicy add state CREATE public read,show owner all;
+
+add bus pmrStudent 3DST Sept23 policy pmrStudentPolicy vault vplm;
+
+temp query bus pmrStudent * * select attribute[pmrStudentDuration] id;
+
+mod type pmrStudent add attribute pmrStudentDuration;
+
+mod bus  52812.39166.21003.35820 pmrStudentDuration 10;
+
+add businessobject 'eService Object Generator' type_pmrStudent 1 policy 'eService Object Generator' vault 'eService Administration';
+
+print type 'eService Object Generator' !history;
+
+mod bus 'eService Object Generator' type_pmrStudent 1 'eService Safety Policy' policy_pmrStudentPolicy 'eService Processing Time Limit' 60 		'eService Safety Vault' vault_vplm 'eService Retry Count' 5 'eService Retry Delay' 1000 'eService Name Prefix' 3DST;
+
+add businessobject 'eService Number Generator' type_pmrStudent 1 policy 'eService Object Generator' vault 'eService Administration';
+
+print type 'eService Number Generator' !history;
+
+mod bus 'eService Number Generator' type_pmrStudent 1 'eService Next Number' 0100;
+
+connect bus "eService Object Generator" "type_pmrStudent" "" relationship "eService Number Generator" to "eService Number Generator" 			"type_pmrStudent" "";
+
+temp query bus * type_pmrStudent * select id; (two bus object that we have created Object & Number Generator)
+
+copy bus "bus_id" to type_pmrStudent ""; (repeat for n numbers of business object)
+
+connect bus "eService Object Generator" "type_pmrStudent" "" relationship "eService Number Generator" to "eService Number Generator" 			"type_pmStudent" "";
+ 
+temp query bus pmr* * *; //for displaying all the business objects created
+
+
+
+
