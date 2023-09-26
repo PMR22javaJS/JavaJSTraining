@@ -28,13 +28,28 @@ mod bus 'eService Number Generator' type_pmrStudent 1 'eService Next Number' 010
 
 connect bus "eService Object Generator" "type_pmrStudent" "" relationship "eService Number Generator" to "eService Number Generator" 			"type_pmrStudent" "";
 
-temp query bus * type_pmrStudent * select id; (two bus object that we have created Object & Number Generator)
+ temp query bus * type_pmrStudent * select id; (two bus object that we have created Object & Number Generator)
 
 copy bus "bus_id" to type_pmrStudent ""; (repeat for n numbers of business object)
 
-connect bus "eService Object Generator" "type_pmrStudent" "" relationship "eService Number Generator" to "eService Number Generator" 			"type_pmStudent" "";
- 
+connect bus "eService Object Generator" "type_pmrStudent" "" relationship "eService Number Generator" to "eService Number Generator" "type_pmrStudent" "";
+
 temp query bus pmr* * *; //for displaying all the business objects created
+
+mod type pmrStudent add trigger create action StudentAction;
+
+mod type pmrTraining add trigger create action TrainingAction input "-method createTraining ${TYPE} ${NAME} ${REVISION} ${POLICY} ${VAULT}";
+
+mod type pmrStudent add trigger create action StudentAction input "-method createStudent ${TYPE} ${NAME} ${REVISION} ${POLICY} ${VAULT}";
+
+mod type pmrTraining add trigger create action TrainingAction input "-method createStudent ${TYPE} ${NAME} ${REVISION} ${POLICY} ${VAULT}";
+
+FOR NOT AUTONAMING -----------------------------------------------------
+add bus pmrStudent 3DST A policy pmrStudentPolicy vault vplm;
+// in the args this will go and from there we will fetch it and put it in createObject method
+
+
+
 
 
 
