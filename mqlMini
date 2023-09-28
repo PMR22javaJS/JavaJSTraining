@@ -48,6 +48,54 @@ FOR NOT AUTONAMING -----------------------------------------------------
 add bus pmrStudent 3DST A policy pmrStudentPolicy vault vplm;
 // in the args this will go and from there we will fetch it and put it in createObject method
 
+pmrTraining ------>
+108 ---------  52812.39166.21003.47758
+109 ---------  52812.39166.51389.57876
+110 ---------  52812.39166.59181.21739
+
+pmrStudent ------>
+111 ---------  52812.39166.47934.36775
+112 ---------  52812.39166.59181.21811
+113 ---------  52812.39166.59181.21960
+
+post ------ 3DSTpost1 --------- 52812.39166.28197.35258
+     ------ 3DSTpost2 --------- 52812.39166.28197.35334
+
+mod type pmrTraining remove trigger create action;
+
+mod type pmrTraining add trigger create action TrainingAction input "-method createStudent ${OBJECTID}";
+
+add bus "eService Trigger Program Parameters" typepmrTrainingCreateAction "createStudent" policy "eService Trigger Program Policy" vault "eService Administration";
+
+mod bus "eService Trigger Program Parameters" typepmrTrainingCreateAction "createStudent" "eService Program Name" TrainingAction "eService Method Name" createStudent "eService Program Argument 1" ${OBJECTID} "eService Program Argument 2" ${NAME} "eService Sequence Number" 1 vault "eService Administration";
+
+add bus "eService Trigger Program Parameters" typepmrTrainingCreateAction "connectStudent" policy "eService Trigger Program Policy" vault "eService Administration";
+
+mod bus "eService Trigger Program Parameters" typepmrTrainingCreateAction "connectStudent" "eService Program Name" TrainingAction "eService Method Name" connectStudent "eService Program Argument 1" ${OBJECTID} "eService Program Argument 2" ${NAME} "eService Sequence Number" 2 vault "eService Administration";
+
+trigger on;
+
+print bus "eService Trigger Program Parameters" typepmrTrainingCreateAction "createStudent"; 
+//current state inactive
+
+promote bus "eService Trigger Program Parameters" typepmrTrainingCreateAction "createStudent";
+
+print bus "eService Trigger Program Parameters" typepmrTrainingCreateAction "createStudent";
+//current state active 
+
+print bus "eService Trigger Program Parameters" typepmrTrainingCreateAction "connectStudent"; 
+//current state inactive
+
+promote bus "eService Trigger Program Parameters" typepmrTrainingCreateAction "connectStudent";
+
+print bus "eService Trigger Program Parameters" typepmrTrainingCreateAction "connectStudent";
+//current state active 
+
+
+print bus 52812.39166.59181.21739 select from[pmrTraining-pmrStudent].to.attribute.value;
+
+
+
 
 
 
