@@ -1,99 +1,166 @@
------------------------------- AUTONAMING ------------------------------
+------------------------------------------------------------
+                     
+                       AUTONAMING 
 
-add attribute pmrStudentDuration type integer;
+------------------------------------------------------------
 
-add policy pmrStudentPolicy type pmrStudent;
+				add attribute pmrStudentDuration type integer;
 
-mod policy pmrStudentPolicy add state CREATE public read,show owner all;
+				add policy pmrStudentPolicy type pmrStudent;
 
-add bus pmrStudent 3DST Sept23 policy pmrStudentPolicy vault vplm;
+				mod policy pmrStudentPolicy add state CREATE public read,show owner all;
 
-temp query bus pmrStudent * * select attribute[pmrStudentDuration] id;
+				add bus pmrStudent 3DST Sept23 policy pmrStudentPolicy vault vplm;
 
-mod type pmrStudent add attribute pmrStudentDuration;
+				temp query bus pmrStudent * * select attribute[pmrStudentDuration] id;
 
-mod bus  52812.39166.21003.35820 pmrStudentDuration 10;
+				mod type pmrStudent add attribute pmrStudentDuration;
 
-add businessobject 'eService Object Generator' type_pmrStudent 1 policy 'eService Object Generator' vault 'eService Administration';
+				mod bus  52812.39166.21003.35820 pmrStudentDuration 10;
 
-print type 'eService Object Generator' !history;
+				add businessobject 'eService Object Generator' type_pmrStudent 1 policy 'eService Object Generator' vault 'eService Administration';
 
-mod bus 'eService Object Generator' type_pmrStudent 1 'eService Safety Policy' policy_pmrStudentPolicy 'eService Processing Time Limit' 60 		'eService Safety Vault' vault_vplm 'eService Retry Count' 5 'eService Retry Delay' 1000 'eService Name Prefix' 3DST;
+				print type 'eService Object Generator' !history;
 
-add businessobject 'eService Number Generator' type_pmrStudent 1 policy 'eService Object Generator' vault 'eService Administration';
+				mod bus 'eService Object Generator' type_pmrStudent 1 'eService Safety Policy' policy_pmrStudentPolicy 'eService Processing Time Limit' 60 		'eService Safety Vault' vault_vplm 'eService Retry Count' 5 'eService Retry Delay' 1000 'eService Name Prefix' 3DST;
 
-print type 'eService Number Generator' !history;
+				add businessobject 'eService Number Generator' type_pmrStudent 1 policy 'eService Object Generator' vault 'eService Administration';
 
-mod bus 'eService Number Generator' type_pmrStudent 1 'eService Next Number' 0100;
+				print type 'eService Number Generator' !history;
 
-connect bus "eService Object Generator" "type_pmrStudent" "" relationship "eService Number Generator" to "eService Number Generator" 			"type_pmrStudent" "";
+				mod bus 'eService Number Generator' type_pmrStudent 1 'eService Next Number' 0100;
 
- temp query bus * type_pmrStudent * select id; (two bus object that we have created Object & Number Generator)
+				connect bus "eService Object Generator" "type_pmrStudent" "" relationship "eService Number Generator" to "eService Number Generator" 			"type_pmrStudent" "";
 
-copy bus "bus_id" to type_pmrStudent ""; (repeat for n numbers of business object)
+				 temp query bus * type_pmrStudent * select id; (two bus object that we have created Object & Number Generator)
 
-connect bus "eService Object Generator" "type_pmrStudent" "" relationship "eService Number Generator" to "eService Number Generator" "type_pmrStudent" "";
+				copy bus "bus_id" to type_pmrStudent ""; (repeat for n numbers of business object)
 
-temp query bus pmr* * *; //for displaying all the business objects created
+				connect bus "eService Object Generator" "type_pmrStudent" "" relationship "eService Number Generator" to "eService Number Generator" "type_pmrStudent" "";
 
-mod type pmrStudent add trigger create action StudentAction;
+				temp query bus pmr* * *; //for displaying all the business objects created
 
-mod type pmrTraining add trigger create action TrainingAction input "-method createTraining ${TYPE} ${NAME} ${REVISION} ${POLICY} ${VAULT}";
+				mod type pmrStudent add trigger create action StudentAction;
 
-mod type pmrStudent add trigger create action StudentAction input "-method createStudent ${TYPE} ${NAME} ${REVISION} ${POLICY} ${VAULT}";
+				mod type pmrTraining add trigger create action TrainingAction input "-method createTraining ${TYPE} ${NAME} ${REVISION} ${POLICY} ${VAULT}";
 
-mod type pmrTraining add trigger create action TrainingAction input "-method createStudent ${TYPE} ${NAME} ${REVISION} ${POLICY} ${VAULT}";
+				mod type pmrStudent add trigger create action StudentAction input "-method createStudent ${TYPE} ${NAME} ${REVISION} ${POLICY} ${VAULT}";
 
-FOR NOT AUTONAMING -----------------------------------------------------
-add bus pmrStudent 3DST A policy pmrStudentPolicy vault vplm;
-// in the args this will go and from there we will fetch it and put it in createObject method
+				mod type pmrTraining add trigger create action TrainingAction input "-method createStudent ${TYPE} ${NAME} ${REVISION} ${POLICY} ${VAULT}";
 
-pmrTraining ------>
-108 ---------  52812.39166.21003.47758
-109 ---------  52812.39166.51389.57876
-110 ---------  52812.39166.59181.21739
+				FOR NOT AUTONAMING -----------------------------------------------------
+				add bus pmrStudent 3DST A policy pmrStudentPolicy vault vplm;
+				// in the args this will go and from there we will fetch it and put it in createObject method
 
-pmrStudent ------>
-111 ---------  52812.39166.47934.36775
-112 ---------  52812.39166.59181.21811
-113 ---------  52812.39166.59181.21960
+				pmrTraining ------>
+				108 ---------  52812.39166.21003.47758
+				109 ---------  52812.39166.51389.57876
+				110 ---------  52812.39166.59181.21739
 
-post ------ 3DSTpost1 --------- 52812.39166.28197.35258
-     ------ 3DSTpost2 --------- 52812.39166.28197.35334
+				pmrStudent ------>
+				111 ---------  52812.39166.47934.36775
+				112 ---------  52812.39166.59181.21811
+				113 ---------  52812.39166.59181.21960
 
-mod type pmrTraining remove trigger create action;
+				post ------ 3DSTpost1 --------- 52812.39166.28197.35258
+					 ------ 3DSTpost2 --------- 52812.39166.28197.35334
 
-mod type pmrTraining add trigger create action TrainingAction input "-method createStudent ${OBJECTID}";
-
-add bus "eService Trigger Program Parameters" typepmrTrainingCreateAction "createStudent" policy "eService Trigger Program Policy" vault "eService Administration";
-
-mod bus "eService Trigger Program Parameters" typepmrTrainingCreateAction "createStudent" "eService Program Name" TrainingAction "eService Method Name" createStudent "eService Program Argument 1" ${OBJECTID} "eService Program Argument 2" ${NAME} "eService Sequence Number" 1 vault "eService Administration";
-
-add bus "eService Trigger Program Parameters" typepmrTrainingCreateAction "connectStudent" policy "eService Trigger Program Policy" vault "eService Administration";
-
-mod bus "eService Trigger Program Parameters" typepmrTrainingCreateAction "connectStudent" "eService Program Name" TrainingAction "eService Method Name" connectStudent "eService Program Argument 1" ${OBJECTID} "eService Program Argument 2" ${NAME} "eService Sequence Number" 2 vault "eService Administration";
-
-trigger on;
-
-print bus "eService Trigger Program Parameters" typepmrTrainingCreateAction "createStudent"; 
-//current state inactive
-
-promote bus "eService Trigger Program Parameters" typepmrTrainingCreateAction "createStudent";
-
-print bus "eService Trigger Program Parameters" typepmrTrainingCreateAction "createStudent";
-//current state active 
-
-print bus "eService Trigger Program Parameters" typepmrTrainingCreateAction "connectStudent"; 
-//current state inactive
-
-promote bus "eService Trigger Program Parameters" typepmrTrainingCreateAction "connectStudent";
-
-print bus "eService Trigger Program Parameters" typepmrTrainingCreateAction "connectStudent";
-//current state active 
+				mod type pmrTraining remove trigger create action;
 
 
-print bus 52812.39166.59181.21739 select from[pmrTraining-pmrStudent].to.attribute.value;
 
+
+
+
+
+
+
+
+
+------------------------------------------------------------
+
+                   CREATE ACTION TRIGGER
+
+------------------------------------------------------------
+
+				mod type pmrTraining add trigger create action TrainingAction input "-method createStudent ${OBJECTID}";
+
+				add bus "eService Trigger Program Parameters" typepmrTrainingCreateAction "createStudent" policy "eService Trigger Program Policy" vault "eService Administration";
+
+				mod bus "eService Trigger Program Parameters" typepmrTrainingCreateAction "createStudent" "eService Program Name" TrainingAction "eService Method Name" createStudent "eService Program Argument 1" ${OBJECTID} "eService Program Argument 2" ${NAME} "eService Sequence Number" 1 vault "eService Administration";
+
+				add bus "eService Trigger Program Parameters" typepmrTrainingCreateAction "connectStudent" policy "eService Trigger Program Policy" vault "eService Administration";
+
+				mod bus "eService Trigger Program Parameters" typepmrTrainingCreateAction "connectStudent" "eService Program Name" TrainingAction "eService Method Name" connectStudent "eService Program Argument 1" ${OBJECTID} "eService Program Argument 2" ${NAME} "eService Sequence Number" 2 vault "eService Administration";
+
+				trigger on;
+
+				print bus "eService Trigger Program Parameters" typepmrTrainingCreateAction "createStudent"; 
+				//current state inactive
+
+				promote bus "eService Trigger Program Parameters" typepmrTrainingCreateAction "createStudent";
+
+				print bus "eService Trigger Program Parameters" typepmrTrainingCreateAction "createStudent";
+				//current state active 
+
+				print bus "eService Trigger Program Parameters" typepmrTrainingCreateAction "connectStudent"; 
+				//current state inactive
+
+				promote bus "eService Trigger Program Parameters" typepmrTrainingCreateAction "connectStudent";
+
+				print bus "eService Trigger Program Parameters" typepmrTrainingCreateAction "connectStudent";
+				//current state active 
+
+
+				print bus 52812.39166.59181.21739 select from[pmrTraining-pmrStudent].to.attribute.value;
+
+				businessobject pmrTraining 3DXPD0000113 A
+					id = 52812.39166.3837.28274
+
+				businessobject pmrStudent 3DST0123 A
+					id = 52812.39166.3837.28295
+
+
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------
+                
+                     CHECK TRIGGER MQL COMMAND
+
+------------------------------------------------------------------------ 
+
+				mod policy pmrTrainingPolicy add state IN_PROGRESS;
+
+				mod policy pmrTrainingPolicy add state COMPLETE;
+
+				modify policy "pmrTrainingPolicy" state CREATE add Trigger Promote check emxTriggerManager input PolicypmrTrainingPolicyStateCREATEPromoteCheck;
+
+							(type)              (name)
+				add bus "eService Trigger Program Parameters" PolicypmrTrainingPolicyStateCREATEPromoteCheck CheckIfConnectedStudent policy "eService Trigger Program Policy" vault "eService Administration" ;
+
+				//Trigger should be in eService Administration valut only.
+
+				print bus "eService Trigger Program Parameters" PolicypmrTrainingPolicyStateCREATEPromoteCheck CheckIfConnectedStudent select current;
+
+				   //always in Inactive state 
+				   //You have to promote it 
+
+				promote bus "eService Trigger Program Parameters" PolicypmrTrainingPolicyStateCREATEPromoteCheck CheckIfConnectedStudent;
+
+				print bus "eService Trigger Program Parameters" PolicypmrTrainingPolicyStateCREATEPromoteCheck CheckIfConnectedStudent select current;
+
+				mod bus "eService Trigger Program Parameters" PolicypmrTrainingPolicyStateCREATEPromoteCheck CheckIfConnectedStudent "eService Program Name" TrainingAction "eService Sequence Number" 1 "eService Method Name" checkConnectedStudent "eService Program Argument 1" ${OBJECTID} "eService Program Argument 2" ${NAME};
+
+				mod bus 9083.19951.59181.22362 "eService Program Name" TrainingAction "eService Sequence Number" 1 "eService Method Name" checkConnectedStudent "eService Program Argument 1" ${OBJECTID} "eService Program Argument 2" ${NAME};
+
+				print bus "eService Trigger Program Parameters" PolicypmrTrainingPolicyStateCREATEPromoteCheck CheckIfConnectedStudent select id;
 
 
 
